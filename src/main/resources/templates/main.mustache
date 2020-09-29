@@ -1,0 +1,32 @@
+<html>
+
+<body>
+<div>
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<div>
+    <form method="post">
+        <input type="text" name="name" placeholder="Name" />
+        <input type="text" name="location" placeholder="Location">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+        <button type="submit">Add</button>
+    </form>
+</div>
+<div>List of Conferences</div>
+<form method="post" action="filter">
+    <input type="text" name="filter">
+    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+    <button type="submit">Find</button>
+</form>
+{{#conferences}}
+    <div>
+        <b>{{id}}</b>
+        <span>{{name}}</span>
+        <i>{{location}}</i>
+    </div>
+{{/conferences}}
+</body>
+</html>
