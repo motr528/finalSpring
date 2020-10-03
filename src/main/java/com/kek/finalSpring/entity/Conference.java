@@ -1,18 +1,20 @@
 package com.kek.finalSpring.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Conference {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String name;
     private String location;
+
+    @ManyToMany(mappedBy = "conferences", fetch = FetchType.EAGER)
+    private Set<Participant> participants = new HashSet<>();
 
     public Conference() {
     }
@@ -30,11 +32,11 @@ public class Conference {
         return name;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,6 +46,10 @@ public class Conference {
 
     public void setLocation(String tag) {
         this.location = tag;
+    }
+
+    public int getNumberOfParticipants() {
+        return participants.size();
     }
 }
 

@@ -1,6 +1,7 @@
 package com.kek.finalSpring.config;
 
 
+import com.kek.finalSpring.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,6 +17,9 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private ParticipantService participantService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -35,10 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("select email, password, id from participant where email=?")
-                .authoritiesByUsernameQuery("select p.email, role.roles from participant p inner join role on p.id = role.id where p.email=?");
+        auth.userDetailsService(participantService)
+                .passwordEncoder(NoOpPasswordEncoder.getInstance());
     }
 }

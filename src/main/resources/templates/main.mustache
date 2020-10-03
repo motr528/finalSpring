@@ -26,6 +26,13 @@
         <b>{{id}}</b>
         <span>{{name}}</span>
         <i>{{location}}</i>
+        <p>Number of participants: </p>
+        <b>{{numberOfParticipants}}</b>
+        <form method="post" action="/addParticipant">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+            <input type="hidden" name="id" value="{{id}}" />
+            <button type="submit">Assign Participant</button>
+        </form>
     </div>
 {{/conferences}}
 </body>

@@ -1,11 +1,16 @@
 package com.kek.finalSpring.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "participant")
-public class Participant {
+public class Participant implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -16,6 +21,44 @@ public class Participant {
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "participant_conferences",
+            joinColumns = { @JoinColumn(name = "participant_id") },
+            inverseJoinColumns = { @JoinColumn(name = "conference_id") }
+    )
+    private Set<Conference> conferences = new HashSet<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     public Long getId() {
         return id;
@@ -47,5 +90,13 @@ public class Participant {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Conference> getConferences() {
+        return conferences;
+    }
+
+    public void setConferences(Set<Conference> conferences) {
+        this.conferences = conferences;
     }
 }
