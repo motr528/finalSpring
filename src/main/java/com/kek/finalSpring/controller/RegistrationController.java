@@ -1,6 +1,7 @@
 package com.kek.finalSpring.controller;
 
 import com.kek.finalSpring.entity.Participant;
+import com.kek.finalSpring.entity.ParticipantDetails;
 import com.kek.finalSpring.entity.Role;
 import com.kek.finalSpring.repository.ParticipantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +23,16 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(Participant participant, Map<String, Object> model) {
+    public String addUser(Participant participant, ParticipantDetails details, Map<String, Object> model) {
         Participant participantFromDb = participantRepo.findByEmail(participant.getEmail());
 
-        if (participantFromDb != null) {
-            model.put("message", "User exists!");
-            return "registration";
-        }
+//        if (participantFromDb != null) {
+//            model.put("message", "User exists!");
+//            return "registration";
+//        }
 
+        participant.setDetails(details);
+        details.setParticipant(participant);
         participant.setRoles(Collections.singleton(Role.USER));
         participantRepo.save(participant);
 

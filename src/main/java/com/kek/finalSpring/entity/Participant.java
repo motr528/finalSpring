@@ -1,5 +1,6 @@
 package com.kek.finalSpring.entity;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,6 +9,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "participant")
 public class Participant implements UserDetails {
@@ -16,6 +18,11 @@ public class Participant implements UserDetails {
     private Long id;
     private String email;
     private String password;
+
+    @OneToOne(mappedBy = "participant", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private ParticipantDetails details;
+
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "role", joinColumns = @JoinColumn(name = "id"))
@@ -37,7 +44,7 @@ public class Participant implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return getEmail();
     }
 
     @Override
@@ -60,43 +67,5 @@ public class Participant implements UserDetails {
         return true;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String username) {
-        this.email = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public Set<Conference> getConferences() {
-        return conferences;
-    }
-
-    public void setConferences(Set<Conference> conferences) {
-        this.conferences = conferences;
-    }
 }
