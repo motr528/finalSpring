@@ -1,17 +1,19 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-    <div>
-        <span><a href="/user">Participant list</a> </span>
+
+    <h4>Conferences</h4>
+    <br/>
+    <div class="form-row">
+        <label  class="col-sm-2 col-form-label">Find conference: </label>
+        <div class="form-group col-md-6">
+            <form method="get" action="/conferences" class="form-inline">
+                <input type="text" name="filter" class="form-control" id="search" value="${filter!}" placeholder="Search by location">
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </form>
+        </div>
     </div>
 
-    <div>Conferences</div>
-    <br/>
-    <div>Find conference</div>
-    <form method="get" action="/conferences">
-        <input type="text" name="filter" value="${filter!}">
-        <button type="submit">Find</button>
-    </form>
     <br/>
     <#list conferences as conference>
         <div>

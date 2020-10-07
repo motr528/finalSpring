@@ -4,6 +4,5 @@
 
 <@c.page>
 Login page
-<@l.login "/login"/>
-<a href="/registration">Add new participant</a>
+<@l.login "/login" false />
 </@c.page>

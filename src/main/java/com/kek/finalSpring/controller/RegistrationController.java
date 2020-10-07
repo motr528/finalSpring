@@ -6,11 +6,16 @@ import com.kek.finalSpring.entity.Role;
 import com.kek.finalSpring.repository.ParticipantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class RegistrationController {
@@ -18,22 +23,24 @@ public class RegistrationController {
     private ParticipantRepo participantRepo;
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
+        model.addAttribute("roles", Role.values());
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String addUser(Participant participant, ParticipantDetails details, Map<String, Object> model) {
+    public String addUser(Participant participant, ParticipantDetails details, @RequestParam("role") String role) {
         Participant participantFromDb = participantRepo.findByEmail(participant.getEmail());
 
-//        if (participantFromDb != null) {
+        if (participantFromDb != null) {
 //            model.put("message", "User exists!");
-//            return "registration";
-//        }
+            return "error";
+        }
+
+        participant.setRoles(Collections.singleton(Role.valueOf(role.toUpperCase())));
 
         participant.setDetails(details);
         details.setParticipant(participant);
-        participant.setRoles(Collections.singleton(Role.USER));
         participantRepo.save(participant);
 
         return "redirect:/login";
