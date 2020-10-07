@@ -1,7 +1,6 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-<div>Hello, participant</div>
-<a href="/login">To login</a>
-<a href="/registration">Registration</a>
+<h5>Hello, guest</h5>
+    <div>Conference Management WebPage</div>
 </@c.page>

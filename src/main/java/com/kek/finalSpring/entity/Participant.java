@@ -72,5 +72,9 @@ public class Participant implements UserDetails {
         return true;
     }
 
+    public boolean isAdmin() {
+        return roles.contains(Role.ADMIN);
+    }
+
 
 }

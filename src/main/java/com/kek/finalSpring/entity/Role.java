@@ -3,7 +3,7 @@ package com.kek.finalSpring.entity;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Role implements GrantedAuthority {
-    USER;
+    ADMIN, USER, SPEAKER;
 
 
     @Override
