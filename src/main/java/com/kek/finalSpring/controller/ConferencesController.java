@@ -1,5 +1,6 @@
 package com.kek.finalSpring.controller;
 
+import com.kek.finalSpring.dto.ParticipantDTO;
 import com.kek.finalSpring.entity.Conference;
 import com.kek.finalSpring.entity.Participant;
 import com.kek.finalSpring.repository.ConferenceRepo;
@@ -7,11 +8,14 @@ import com.kek.finalSpring.repository.ParticipantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class ConferencesController {
@@ -22,34 +26,26 @@ public class ConferencesController {
     private ParticipantRepo participantRepo;
 
     @GetMapping("/conferences")
-    public String main(Map<String, Object> model) {
+    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
         Iterable<Conference> conferences = conferenceRepo.findAll();
-
-        model.put("conferences", conferences);
-
-        return "conferences";
-    }
-
-    @PostMapping("filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model) {
-        Iterable<Conference> conferences;
 
         if (filter != null && !filter.isEmpty()) {
             conferences = conferenceRepo.findByLocation(filter);
-        } else {
-            conferences = conferenceRepo.findAll();
         }
 
-        model.put("conferences", conferences);
+        model.addAttribute("conferences", conferences);
+        model.addAttribute("filter", filter);
 
         return "conferences";
     }
 
     @PostMapping("addParticipant")
     public String addParticipant (@AuthenticationPrincipal Participant participant, @RequestParam("id") Long id) {
+
         Conference conference = conferenceRepo.findById(id).orElse(null);
+//        Participant participant = participantRepo.findByEmail(participantDTO.getEmail());
         participant.getConferences().add(conference);
-        conferenceRepo.save(conference);
+//        conferenceRepo.save(conference);
         participantRepo.save(participant);
 
         return "redirect:conferences";

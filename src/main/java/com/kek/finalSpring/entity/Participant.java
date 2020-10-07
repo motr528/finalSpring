@@ -1,15 +1,17 @@
 package com.kek.finalSpring.entity;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "participant")
 public class Participant implements UserDetails {
@@ -29,13 +31,16 @@ public class Participant implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "participant_conferences",
-            joinColumns = { @JoinColumn(name = "participant_id") },
-            inverseJoinColumns = { @JoinColumn(name = "conference_id") }
+            joinColumns = {@JoinColumn(name = "participant_id")},
+            inverseJoinColumns = {@JoinColumn(name = "conference_id")}
+//            uniqueConstraints = @UniqueConstraint(columnNames = {
+//                    "conference_id", "participant_id"})
     )
-    private Set<Conference> conferences = new HashSet<>();
+//    private Set<Conference> conferences = new HashSet<>();
+    private List<Conference> conferences = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

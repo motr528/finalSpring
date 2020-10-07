@@ -1,11 +1,11 @@
-<html>
+<#import "parts/common.ftl" as c>
+<#import "parts/login.ftl" as l>
 
-<body>
+
+
+<@c.page>
 <div>
-    <form action="/logout" method="post">
-        <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
-        <input type="submit" value="Sign Out"/>
-    </form>
+    <@l.logout/>
 </div>
 <div>
     <form method="post">
@@ -18,22 +18,22 @@
 <div>List of Conferences</div>
 <form method="post" action="filter">
     <input type="text" name="filter">
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+    <input type="hidden" name="_csrf" value="${_csrf.token}" />
     <button type="submit">Find</button>
 </form>
-{{#conferences}}
+<#list conferences as conference>
     <div>
-        <b>{{id}}</b>
-        <span>{{name}}</span>
-        <i>{{location}}</i>
+        <b>${conference.id}</b>
+        <span>${conference.name}</span>
+        <i>${conference.location}</i>
         <p>Number of participants: </p>
-        <b>{{numberOfParticipants}}</b>
+        <b>${conference.numberOfParticipants}</b>
         <form method="post" action="/addParticipant">
-            <input type="hidden" name="_csrf" value="{{_csrf.token}}" />
+            <input type="hidden" name="_csrf" value="${_csrf.token}" />
             <input type="hidden" name="id" value="{{id}}" />
             <button type="submit">Assign Participant</button>
         </form>
     </div>
-{{/conferences}}
-</body>
-</html>
+    <#else > No conference
+</#list>
+</@c.page>

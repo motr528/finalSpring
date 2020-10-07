@@ -1,9 +1,18 @@
 package com.kek.finalSpring.entity;
 
+import lombok.*;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Conference {
     @Id
@@ -14,10 +23,8 @@ public class Conference {
     private String location;
 
     @ManyToMany(mappedBy = "conferences", fetch = FetchType.EAGER)
-    private Set<Participant> participants = new HashSet<>();
-
-    public Conference() {
-    }
+//    private Set<Participant> participants = new HashSet<>();
+    private List<Participant> participants = new ArrayList<>();
 
     public Conference(String name, String location) {
         this.name = name;
