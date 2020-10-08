@@ -26,50 +26,25 @@ public class MainController {
         return "greeting";
     }
 
-    @GetMapping("/main")
-    public String main(Map<String, Object> model) {
-        Iterable<Conference> conferences = conferenceRepo.findAll();
-
-        model.put("conferences", conferences);
-
-        return "main";
-    }
-
-    @PostMapping("/main")
-    public String add(@RequestParam String name, @RequestParam String location, Map<String, Object> model) {
-        Conference conference = new Conference(name, location);
-
-        conferenceRepo.save(conference);
-
-        Iterable<Conference> conferences = conferenceRepo.findAll();
-
-        model.put("conferences", conferences);
-
-        return "main";
-    }
-
-//    @PostMapping("filter")
-//    public String filter(@RequestParam String filter, Map<String, Object> model) {
-//        Iterable<Conference> conferences;
-//
-//        if (filter != null && !filter.isEmpty()) {
-//            conferences = conferenceRepo.findByLocation(filter);
-//        } else {
-//            conferences = conferenceRepo.findAll();
-//        }
+//    @GetMapping("/main")
+//    public String main(Map<String, Object> model) {
+//        Iterable<Conference> conferences = conferenceRepo.findAll();
 //
 //        model.put("conferences", conferences);
 //
 //        return "main";
 //    }
-
-//    @PostMapping("addParticipant")
-//    public String addParticipant (@AuthenticationPrincipal Participant participant, @RequestParam("id") Long id) {
-//        Conference conference = conferenceRepo.findById(id).orElse(null);
-//        participant.getConferences().add(conference);
-//        conferenceRepo.save(conference);
-//        participantRepo.save(participant);
 //
-//        return "redirect:main";
+//    @PostMapping("/main")
+//    public String add(@RequestParam String name, @RequestParam String location, Map<String, Object> model) {
+//        Conference conference = new Conference(name, location);
+//
+//        conferenceRepo.save(conference);
+//
+//        Iterable<Conference> conferences = conferenceRepo.findAll();
+//
+//        model.put("conferences", conferences);
+//
+//        return "main";
 //    }
 }

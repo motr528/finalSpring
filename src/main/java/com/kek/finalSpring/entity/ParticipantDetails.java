@@ -10,6 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "participant_details")
 public class ParticipantDetails {
 
     @OneToOne(fetch = FetchType.LAZY)

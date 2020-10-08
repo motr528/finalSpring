@@ -14,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "conference")
 public class Conference {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

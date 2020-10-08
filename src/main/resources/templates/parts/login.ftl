@@ -15,7 +15,7 @@
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <#if !isRegisterForm><a href="/registration">Add new participant</a></#if>
+        <#if !isRegisterForm><a href="/registration" class="btn btn-success">Add new participant</a></#if>
         <button type="submit" class="btn btn-primary">Sign In</button>
     </form>
 

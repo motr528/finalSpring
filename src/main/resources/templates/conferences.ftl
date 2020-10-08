@@ -1,4 +1,5 @@
 <#import "parts/common.ftl" as c>
+<#import "parts/conference.ftl" as conf>
 
 <@c.page>
 
@@ -17,16 +18,8 @@
     <br/>
     <#list conferences as conference>
         <div>
-            <b>${conference.id}</b>
-            <span>${conference.name}</span>
-            <i>${conference.location}</i>
-            <p>Number of participants: </p>
-            <b>${conference.numberOfParticipants}</b>
-            <form method="post" action="/addParticipant">
-                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                <input type="hidden" name="id" value="${conference.id}"/>
-                <button type="submit">Assign Participant</button>
-            </form>
+            <@conf.conf_view conference>
+            </@conf.conf_view>
         </div>
     <#else > No conference
     </#list>

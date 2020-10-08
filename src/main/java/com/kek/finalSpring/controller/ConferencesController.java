@@ -1,6 +1,5 @@
 package com.kek.finalSpring.controller;
 
-import com.kek.finalSpring.dto.ParticipantDTO;
 import com.kek.finalSpring.entity.Conference;
 import com.kek.finalSpring.entity.Participant;
 import com.kek.finalSpring.repository.ConferenceRepo;
@@ -12,10 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class ConferencesController {
