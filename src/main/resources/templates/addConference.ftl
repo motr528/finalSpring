@@ -9,7 +9,7 @@
        aria-controls="collapseExample">
         Add new Conference
     </a>
-    <div class="collapse" id="collapseExample">
+    <div class="collapse <#if newConf??>show</#if>" id="collapseExample">
         <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data" action="/addConference">
                 <div class="form-group">

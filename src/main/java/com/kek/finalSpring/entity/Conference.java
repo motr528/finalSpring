@@ -69,5 +69,7 @@ public class Conference {
     public String dateAsString() {
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
+
+
 }
 

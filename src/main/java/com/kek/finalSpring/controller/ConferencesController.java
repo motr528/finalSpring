@@ -4,6 +4,7 @@ import com.kek.finalSpring.entity.Conference;
 import com.kek.finalSpring.entity.Participant;
 import com.kek.finalSpring.repository.ConferenceRepo;
 import com.kek.finalSpring.repository.ParticipantRepo;
+import com.kek.finalSpring.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -25,19 +26,15 @@ public class ConferencesController {
     @Autowired
     private ParticipantRepo participantRepo;
 
+    @Autowired
+    private ConferenceService conferenceService;
+
     @GetMapping("/conferences")
-    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-
-        Iterable<Conference> conferences = conferenceRepo.findAll();
+    public String showConferences(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
 
 
-        if (filter != null && !filter.isEmpty()) {
-            conferences = conferenceRepo.findByLocation(filter);
-        }
 
-
-        model.addAttribute("conferences", conferences);
-        model.addAttribute("filter", filter);
+        conferenceService.showAllConferences(model, filter);
 
         return "conferences";
     }
@@ -60,29 +57,14 @@ public class ConferencesController {
             String dateTo,
             Model model) {
 
-        Iterable<Conference> conferences;
-        Date dateFromAsDate;
-        Date dateToAsDate;
-
         try {
-            dateFromAsDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateFrom);
-            if (isDateValid(dateTo)) {
-                dateToAsDate = new SimpleDateFormat("dd/MM/yyyy").parse(dateTo);
-                conferences = conferenceRepo.findByDateBetween(dateFromAsDate, dateToAsDate);
-            } else {
-                conferences = conferenceRepo.findByDateAfter(dateFromAsDate);
-            }
+            conferenceService.showByDate(dateFrom,dateTo,model);
         } catch (ParseException e) {
             System.out.println("wrong date");
             return "error";
         }
 
-        model.addAttribute("conferences", conferences);
-
         return "conferences";
     }
 
-    private boolean isDateValid(String date) {
-        return date != null && !date.isEmpty();
-    }
 }

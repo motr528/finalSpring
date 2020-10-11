@@ -12,21 +12,46 @@
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>
             </li>
+            <#if participant??>
             <li class="nav-item">
                 <a class="nav-link" href="/conferences">Conferences</a>
             </li>
+            </#if>
+
+            <#if !participant??>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            </#if>
+
+            <#if !participant??>
+                <li class="nav-item">
+                    <a class="nav-link" href="/registration">Registration</a>
+                </li>
+            </#if>
+
             <#if isAdmin>
             <li class="nav-item">
                 <a class="nav-link" href="/user">User list</a>
             </li>
             </#if>
+
+<#--            <#if participant??>-->
+<#--                <li class="nav-item">-->
+<#--                    <a class="nav-link" href="/user/profile">Profile</a>-->
+<#--                </li>-->
+<#--            </#if>-->
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/addConference">Add conference</a>
                 </li>
             </#if>
         </ul>
+
         <div class="navbar-text mr-3">${email}</div>
+        <#if participant??>
+        <a class="nav-link mr-3" href="/user/profile">Profile</a>
+        </#if>
         <@l.logout />
     </div>
 </nav>

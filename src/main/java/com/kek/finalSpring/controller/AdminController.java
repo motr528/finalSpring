@@ -2,7 +2,6 @@ package com.kek.finalSpring.controller;
 
 import com.kek.finalSpring.entity.Conference;
 import com.kek.finalSpring.repository.ConferenceRepo;
-import com.kek.finalSpring.repository.ParticipantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 @Controller
 public class AdminController {
@@ -30,7 +28,7 @@ public class AdminController {
     }
 
     @PostMapping("/addConference")
-    public String add(@RequestParam String name, @RequestParam String location, @RequestParam String date, Map<String, Object> model) {
+    public String addConference(@RequestParam String name, @RequestParam String location, @RequestParam String date, Model model) {
         Date dateFromString;
 
         try {
@@ -45,9 +43,11 @@ public class AdminController {
 
         conferenceRepo.save(conference);
 
+        model.addAttribute("newConf", conference);
+
         Iterable<Conference> conferences = conferenceRepo.findAll();
 
-        model.put("conferences", conferences);
+        model.addAttribute("conferences", conferences);
 
         return "addConference";
     }
