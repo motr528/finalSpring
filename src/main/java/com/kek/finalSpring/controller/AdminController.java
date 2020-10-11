@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -27,8 +30,18 @@ public class AdminController {
     }
 
     @PostMapping("/addConference")
-    public String add(@RequestParam String name, @RequestParam String location, Map<String, Object> model) {
-        Conference conference = new Conference(name, location);
+    public String add(@RequestParam String name, @RequestParam String location, @RequestParam String date, Map<String, Object> model) {
+        Date dateFromString;
+
+        try {
+            dateFromString = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+            if (dateFromString.getTime() < new Date().getTime()) {
+                throw new RuntimeException("this date has passed");
+            }
+        } catch (ParseException | RuntimeException e) {
+            return "error";
+        }
+        Conference conference = new Conference(name, location, dateFromString);
 
         conferenceRepo.save(conference);
 

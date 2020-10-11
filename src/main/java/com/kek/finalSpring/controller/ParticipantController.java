@@ -3,6 +3,7 @@ package com.kek.finalSpring.controller;
 import com.kek.finalSpring.entity.Participant;
 import com.kek.finalSpring.entity.Role;
 import com.kek.finalSpring.repository.ParticipantRepo;
+import com.kek.finalSpring.service.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class ParticipantController {
 
     @Autowired
     private ParticipantRepo participantRepo;
+
+    @Autowired
+    private ParticipantService participantService;
 
     @GetMapping
     public String participantList(Model model) {

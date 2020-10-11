@@ -3,10 +3,8 @@ package com.kek.finalSpring.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Getter
 @Setter
@@ -22,6 +20,8 @@ public class Conference {
 
     private String name;
     private String location;
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     @ManyToMany(mappedBy = "conferences", fetch = FetchType.EAGER)
 //    private Set<Participant> participants = new HashSet<>();
@@ -30,6 +30,12 @@ public class Conference {
     public Conference(String name, String location) {
         this.name = name;
         this.location = location;
+    }
+
+    public Conference(String name, String location, Date date) {
+        this.name = name;
+        this.location = location;
+        this.date = date;
     }
 
     public void setName(String text) {
@@ -58,6 +64,10 @@ public class Conference {
 
     public int getNumberOfParticipants() {
         return participants.size();
+    }
+
+    public String dateAsString() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 }
 

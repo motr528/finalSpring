@@ -4,14 +4,29 @@
 
 
 <@c.page>
-    <div>
-        <form method="post" action="/addConference">
-            <input type="text" name="name" placeholder="Name" />
-            <input type="text" name="location" placeholder="Location"/>
-            <input type="hidden" name="_csrf" value="${_csrf.token}" />
-            <button type="submit">Add</button>
-        </form>
+
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+       aria-controls="collapseExample">
+        Add new Conference
+    </a>
+    <div class="collapse" id="collapseExample">
+        <div class="form-group mt-3">
+            <form method="post" enctype="multipart/form-data" action="/addConference">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="Name"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="location" placeholder="Location">
+                </div>
+                <input class="form-control" id="date" name="date" placeholder="Date: MM/DD/YYYY" type="text"/>
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
     </div>
+
     <h4>List of Conferences</h4>
     <#list conferences as conference>
         <div>

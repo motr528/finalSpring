@@ -12,6 +12,13 @@
                 <input type="text" name="filter" class="form-control" id="search" value="${filter!}" placeholder="Search by location">
                 <button type="submit" class="btn btn-primary ml-2">Search</button>
             </form>
+
+            <form method="post" action="filterByDate" class="form-inline">
+                <input type="text" name="dateFrom" class="form-control" value="${dateFrom!}" placeholder="Date from: DD/MM/YYYY" >
+                <input type="text" name="dateTo" class="form-control" value="${dateTo!}" placeholder="Date to: DD/MM/YYYY">
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary ml-2">Search</button>
+            </form>
         </div>
     </div>
 
