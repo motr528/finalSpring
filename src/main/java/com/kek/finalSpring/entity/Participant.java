@@ -31,16 +31,13 @@ public class Participant implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(
             name = "participant_conferences",
             joinColumns = {@JoinColumn(name = "participant_id")},
-            inverseJoinColumns = {@JoinColumn(name = "conference_id")}
-//            uniqueConstraints = @UniqueConstraint(columnNames = {
-//                    "conference_id", "participant_id"})
-    )
-//    private Set<Conference> conferences = new HashSet<>();
-    private List<Conference> conferences = new ArrayList<>();
+            inverseJoinColumns = {@JoinColumn(name = "conference_id")})
+    private Set<Conference> conferences = new HashSet<>();
+//    private List<Conference> conferences = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -25,4 +25,6 @@ public class Talk {
     @JoinColumn(name = "speaker_id")
     private Participant speaker;
 
+
+
 }

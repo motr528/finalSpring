@@ -24,8 +24,8 @@ public class Conference {
     private Date date;
 
     @ManyToMany(mappedBy = "conferences", fetch = FetchType.EAGER)
-//    private Set<Participant> participants = new HashSet<>();
-    private List<Participant> participants = new ArrayList<>();
+    private Set<Participant> participants = new HashSet<>();
+//    private List<Participant> participants = new ArrayList<>();
 
     public Conference(String name, String location) {
         this.name = name;

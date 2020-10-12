@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 @Controller
 public class ConferencesController {
@@ -31,9 +31,6 @@ public class ConferencesController {
 
     @GetMapping("/conferences")
     public String showConferences(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-
-
-
         conferenceService.showAllConferences(model, filter);
 
         return "conferences";
@@ -43,10 +40,23 @@ public class ConferencesController {
     public String addParticipant(@AuthenticationPrincipal Participant participant, @RequestParam("id") Long id) {
 
         Conference conference = conferenceRepo.findById(id).orElse(null);
+
+//        List<Long> conf_ids = new ArrayList<>();
+
+//        conf_ids = conferenceRepo.findByParticipantId(participantRepo.findByEmail(participant.getEmail()).getId());
 //        Participant participant = participantRepo.findByEmail(participantDTO.getEmail());
+
         participant.getConferences().add(conference);
+
 //        conferenceRepo.save(conference);
-        participantRepo.save(participant);
+//        participantRepo.save(participant);
+//        for (Conference conf: participant.getConferences()) {
+//            if (!conf_ids.contains(conference.getId())) {
+//                participantRepo.insertUniqueConf(participant.getId(),conf.getId());
+//            }
+//        }
+
+        participantRepo.insertUniqueConf(participant.getId(),id);
 
         return "redirect:conferences";
     }
@@ -58,7 +68,7 @@ public class ConferencesController {
             Model model) {
 
         try {
-            conferenceService.showByDate(dateFrom,dateTo,model);
+            conferenceService.showByDate(dateFrom, dateTo, model);
         } catch (ParseException e) {
             System.out.println("wrong date");
             return "error";
