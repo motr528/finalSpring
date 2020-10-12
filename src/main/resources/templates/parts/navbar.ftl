@@ -46,6 +46,12 @@
                     <a class="nav-link" href="/addConference">Add conference</a>
                 </li>
             </#if>
+
+            <#if isAdmin>
+                <li class="nav-item">
+                    <a class="nav-link" href="/addTalk">Add talk</a>
+                </li>
+            </#if>
         </ul>
 
         <div class="navbar-text mr-3">${email}</div>

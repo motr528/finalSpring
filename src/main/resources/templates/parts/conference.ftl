@@ -1,6 +1,6 @@
 <#include "security.ftl">
 
-<#macro conf_view conference>
+<#macro conf_view conference talks = '' >
     <div class="card text-center mb-3">
         <div class="card-header text-left">
             <#if conference.date??>
@@ -12,6 +12,15 @@
         <div class="card-body">
             <h5 class="card-title">${conference.name}</h5>
             <p class="card-text">Description</p>
+
+            <#include "talk.ftl">
+            <div>
+                <#if talks?has_content>
+                    <#nested talks>
+                    <#else> No talks
+                </#if>
+            </div>
+
             <#if !isAdmin>
             <form method="post" action="/addParticipant">
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>

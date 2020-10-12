@@ -25,7 +25,14 @@ public class Conference {
 
     @ManyToMany(mappedBy = "conferences", fetch = FetchType.EAGER)
     private Set<Participant> participants = new HashSet<>();
-//    private List<Participant> participants = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(
+            name = "conference_talks",
+            joinColumns = {@JoinColumn(name = "conference_id")},
+            inverseJoinColumns = {@JoinColumn(name = "talk_id")})
+    private Set<Talk> talks = new HashSet<>();
+
 
     public Conference(String name, String location) {
         this.name = name;

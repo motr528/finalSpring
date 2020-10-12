@@ -1,7 +1,9 @@
 package com.kek.finalSpring.service;
 
 import com.kek.finalSpring.entity.Conference;
+import com.kek.finalSpring.entity.Participant;
 import com.kek.finalSpring.repository.ConferenceRepo;
+import com.kek.finalSpring.repository.ParticipantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ import java.util.List;
 
 @Service
 public class ConferenceService {
+
+    @Autowired
+    private ParticipantRepo participantRepo;
 
     @Autowired
     private ConferenceRepo conferenceRepo;
@@ -55,5 +60,21 @@ public class ConferenceService {
 
     private boolean isDateValid(String date) {
         return date != null && !date.isEmpty();
+    }
+
+    public void addParticipant(Participant participant, Long id) {
+        boolean isAdded = false;
+
+        Conference conference = conferenceRepo.findById(id).orElse(null);
+
+        if (conferenceRepo.findConferenceIdFromJoinedTableByParticipantId(participant.getId()).contains(id)) {
+            isAdded = true;
+        }
+
+        if (!isAdded) {
+            participant.getConferences().add(conference);
+
+            participantRepo.insertUniqueConf(participant.getId(), id);
+        }
     }
 }

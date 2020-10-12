@@ -37,7 +37,6 @@ public class Participant implements UserDetails {
             joinColumns = {@JoinColumn(name = "participant_id")},
             inverseJoinColumns = {@JoinColumn(name = "conference_id")})
     private Set<Conference> conferences = new HashSet<>();
-//    private List<Conference> conferences = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
