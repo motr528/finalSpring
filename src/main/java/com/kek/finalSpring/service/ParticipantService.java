@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
@@ -66,6 +67,15 @@ public class ParticipantService implements UserDetailsService {
         }
 
         participantRepo.save(user);
+    }
+
+    @Transactional
+    public void findSpeakers(Model model) {
+        List<Participant> speakers = findAll().stream()
+                .filter(Participant::isSpeaker)
+                .collect(Collectors.toList());
+
+        model.addAttribute("speakers",speakers);
     }
 }
 

@@ -5,6 +5,7 @@ import com.kek.finalSpring.entity.Talk;
 import com.kek.finalSpring.repository.ConferenceRepo;
 import com.kek.finalSpring.repository.TalkRepo;
 import com.kek.finalSpring.service.ConferenceService;
+import com.kek.finalSpring.service.ParticipantService;
 import com.kek.finalSpring.service.TalkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class AdminController {
     private TalkService talkService;
     @Autowired
     private TalkRepo talkRepo;
+    @Autowired
+    private ParticipantService participantService;
 
     @GetMapping("/addConference")
     public String main(Model model) {
@@ -39,7 +42,8 @@ public class AdminController {
     }
 
     @PostMapping("/addConference")
-    public String addConference(@RequestParam String name, @RequestParam String location, @RequestParam String date, Model model) {
+    public String addConference(@RequestParam String name, @RequestParam String location, @RequestParam String date,
+                                @RequestParam Integer numOfSlots ,Model model) {
         Date dateFromString;
 
         try {
@@ -50,7 +54,7 @@ public class AdminController {
         } catch (ParseException | RuntimeException e) {
             return "error";
         }
-        Conference conference = new Conference(name, location, dateFromString);
+        Conference conference = new Conference(name, location, dateFromString, numOfSlots);
 
         conferenceRepo.save(conference);
 
@@ -65,6 +69,8 @@ public class AdminController {
 
     @GetMapping("/addTalk")
     public String showTalks(Model model) {
+
+        participantService.findSpeakers(model);
         conferenceService.showAllConferences(model,"");
         talkService.showAllTalks(model);
 
@@ -72,9 +78,9 @@ public class AdminController {
     }
 
     @PostMapping("/addTalk")
-    public String addTalk(@RequestParam String name, @RequestParam String time, @RequestParam String conference_id, Model model) {
+    public String addTalk(@RequestParam String name, @RequestParam String time, @RequestParam String conference_id, @RequestParam String speaker_id, Model model) {
 
-        talkService.addTalk(name, time, conference_id, model);
+        talkService.addTalk(name, time, conference_id, speaker_id, model);
 
         return "addTalk";
     }

@@ -4,7 +4,7 @@
     <div class="card text-center mb-3">
         <div class="card-header text-left">
             <#if conference.date??>
-            ${conference.dateAsString()}, ${conference.location}
+            ${conference.dateAsString()}, ${conference.location},
                 <#else>
                 No date yet, ${conference.location}
             </#if>
@@ -17,7 +17,7 @@
             <div>
                 <#if talks?has_content>
                     <#nested talks>
-                    <#else> No talks
+                    <#else> No talks, but ${conference.availableSlots} slots
                 </#if>
             </div>
 

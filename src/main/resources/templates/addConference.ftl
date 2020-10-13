@@ -18,6 +18,9 @@
                 <div class="form-group">
                     <input type="text" class="form-control" name="location" placeholder="Location">
                 </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="numOfSlots" placeholder="Number of talk slots">
+                </div>
                 <input class="form-control" id="date" name="date" placeholder="Date: MM/DD/YYYY" type="text"/>
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                 <div class="form-group">

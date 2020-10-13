@@ -21,9 +21,18 @@
 
                 <div class="form-group">
                     <label for="conferenceSelect">Select conference</label>
-                    <select class="form-control" name="conference_id" id="conferenceSelect">
+                    <select class="form-control" name="conferenceId" id="conferenceSelect">
                         <#list conferences as conference>
                             <option value=${conference.id}>${conference.name}, ${conference.location}, ${conference.date}</option>
+                        </#list>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="speakerSelect">Select conference</label>
+                    <select class="form-control" name="speakerId" id="speakerSelect">
+                        <#list speakers as speaker>
+                            <option value=${speaker.id}>${speaker.details.lastName}, ${speaker.details.firstName}</option>
                         </#list>
                     </select>
                 </div>

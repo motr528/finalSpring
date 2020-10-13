@@ -1,9 +1,8 @@
 package com.kek.finalSpring.repository;
 
 import com.kek.finalSpring.entity.Conference;
-import com.kek.finalSpring.entity.Participant;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface ConferenceRepo extends CrudRepository<Conference, Long> {
+public interface ConferenceRepo extends JpaRepository<Conference, Long> {
 
     List<Conference> findByLocation(String location);
     List<Conference> findByDateBetween(Date dateFrom, Date dateTo);

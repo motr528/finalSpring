@@ -22,6 +22,8 @@ public class Conference {
     private String location;
     @Temporal(TemporalType.DATE)
     private Date date;
+    @Column(name = "slots")
+    private Integer talkSlots;
 
     @ManyToMany(mappedBy = "conferences", fetch = FetchType.EAGER)
     private Set<Participant> participants = new HashSet<>();
@@ -39,10 +41,11 @@ public class Conference {
         this.location = location;
     }
 
-    public Conference(String name, String location, Date date) {
+    public Conference(String name, String location, Date date, Integer numOfSlots) {
         this.name = name;
         this.location = location;
         this.date = date;
+        this.talkSlots = numOfSlots;
     }
 
     public void setName(String text) {
@@ -77,6 +80,9 @@ public class Conference {
         return new SimpleDateFormat("dd/MM/yyyy").format(date);
     }
 
+    public Integer getAvailableSlots() {
+        return Math.max((talkSlots - talks.size()), 0);
+    }
 
 }
 
