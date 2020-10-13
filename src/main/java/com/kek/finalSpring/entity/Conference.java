@@ -15,7 +15,7 @@ import java.util.*;
 @Table(name = "conference")
 public class Conference {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     private String name;

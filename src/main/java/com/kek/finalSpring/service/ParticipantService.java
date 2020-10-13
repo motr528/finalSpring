@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
@@ -22,6 +23,7 @@ public class ParticipantService implements UserDetailsService {
     private ParticipantRepo participantRepo;
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return participantRepo.findByEmail(email);
     }
@@ -30,7 +32,7 @@ public class ParticipantService implements UserDetailsService {
         return participantRepo.findAll();
     }
 
-
+    @Transactional
     public void saveUser(Participant user, String email, Map<String, String> form) {
         user.setEmail(email);
         user.getDetails().setFirstName(form.get("firstName"));
@@ -52,6 +54,7 @@ public class ParticipantService implements UserDetailsService {
         participantRepo.save(user);
     }
 
+    @Transactional
     public void updateProfile(Participant user, String firstName, String lastName, String password) {
 
         user.getDetails().setFirstName(firstName);

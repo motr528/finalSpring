@@ -2,10 +2,12 @@ package com.kek.finalSpring.service;
 
 import com.kek.finalSpring.entity.Conference;
 import com.kek.finalSpring.entity.Participant;
+import com.kek.finalSpring.entity.Talk;
 import com.kek.finalSpring.repository.ConferenceRepo;
 import com.kek.finalSpring.repository.ParticipantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import java.text.ParseException;
@@ -23,6 +25,7 @@ public class ConferenceService {
     @Autowired
     private ConferenceRepo conferenceRepo;
 
+    @Transactional
     public void showAllConferences(Model model, String filter) {
         List<Conference> conferences = (List<Conference>) conferenceRepo.findAll();
 
@@ -36,6 +39,7 @@ public class ConferenceService {
         model.addAttribute("filter", filter);
     }
 
+    @Transactional
     public void showByDate(String dateFrom, String dateTo, Model model) throws ParseException {
         List<Conference> conferences;
         Date dateFromAsDate;
@@ -54,6 +58,7 @@ public class ConferenceService {
         model.addAttribute("conferences", conferences);
     }
 
+
     private void sortByDate(List<Conference> conferences) {
         conferences.sort(Comparator.comparing(Conference::getDate));
     }
@@ -62,6 +67,7 @@ public class ConferenceService {
         return date != null && !date.isEmpty();
     }
 
+    @Transactional
     public void addParticipant(Participant participant, Long id) {
         boolean isAdded = false;
 
@@ -76,5 +82,7 @@ public class ConferenceService {
 
             participantRepo.insertUniqueConf(participant.getId(), id);
         }
+
+
     }
 }

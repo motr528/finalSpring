@@ -16,7 +16,7 @@ import java.util.*;
 @Table(name = "participant")
 public class Participant implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String password;
@@ -37,6 +37,9 @@ public class Participant implements UserDetails {
             joinColumns = {@JoinColumn(name = "participant_id")},
             inverseJoinColumns = {@JoinColumn(name = "conference_id")})
     private Set<Conference> conferences = new HashSet<>();
+
+    @OneToMany(mappedBy = "speaker")
+    private Set<Talk> talks;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,8 +72,14 @@ public class Participant implements UserDetails {
     }
 
     public boolean isAdmin() {
+
         return roles.contains(Role.ADMIN);
     }
+    public boolean isSpeaker() {
+        return roles.contains(Role.SPEAKER);
+    }
+
+
 
 
 }

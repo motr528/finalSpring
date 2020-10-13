@@ -1,6 +1,7 @@
 package com.kek.finalSpring.service;
 
 import com.kek.finalSpring.entity.Conference;
+import com.kek.finalSpring.entity.Participant;
 import com.kek.finalSpring.entity.Talk;
 import com.kek.finalSpring.repository.ConferenceRepo;
 import com.kek.finalSpring.repository.TalkRepo;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TalkService {
@@ -22,6 +24,8 @@ public class TalkService {
     private ConferenceRepo conferenceRepo;
     @Autowired
     private ConferenceService conferenceService;
+    @Autowired
+    private ParticipantService participantService;
 
     @Transactional
     public void showAllTalks(Model model) {
@@ -52,6 +56,10 @@ public class TalkService {
 
             conference.getTalks().add(talk);
             conferenceRepo.save(conference);
+
+//            List<Participant> speakers = participantService.findAll().stream()
+//                    .filter(Participant::isSpeaker)
+//                    .collect(Collectors.toList());
 
             conferenceService.showAllConferences(model,"");
             showAllTalks(model);
