@@ -33,7 +33,7 @@
     <h4>List of Conferences</h4>
     <#list conferences as conference>
         <div>
-            <@conf.conf_view conference>
+            <@conf.conf_view conference "">
             </@conf.conf_view>
         </div>
     <#else > No conference

@@ -38,6 +38,13 @@ public class Participant implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "conference_id")})
     private Set<Conference> conferences = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinTable(
+            name = "speaker_possible_talks",
+            joinColumns = {@JoinColumn(name = "speaker_id")},
+            inverseJoinColumns = {@JoinColumn(name = "talk_id")})
+    private Set<Talk> possibleTalks = new HashSet<>();
+
     @OneToMany(mappedBy = "speaker")
     private Set<Talk> talks;
 

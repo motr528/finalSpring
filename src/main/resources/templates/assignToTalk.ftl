@@ -5,11 +5,11 @@
 
     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
        aria-controls="collapseExample">
-        Add new Talk
+        Propose new talk
     </a>
-    <div class="collapse <#if newTalk??>show</#if>" id="collapseExample">
+    <div class="collapse" id="collapseExample">
         <div class="form-group mt-3">
-            <form method="post" enctype="multipart/form-data" action="/addTalk">
+            <form method="post" enctype="multipart/form-data" action="/proposeTalk">
                 <div class="form-group">
                     <input type="text" class="form-control" name="name" placeholder="Name"/>
                 </div>
@@ -23,29 +23,21 @@
                     <label for="conferenceSelect">Select conference</label>
                     <select class="form-control" name="conferenceId" id="conferenceSelect">
                         <#list conferences as conference>
-                            <#if (conference.availableSlots > 0) >
-                            <option value=${conference.id}>${conference.name}, ${conference.location}, ${conference.date}</option>
-                            </#if>
+                                <option value=${conference.id}>${conference.name}, ${conference.location}, ${conference.date}</option>
                         </#list>
                     </select>
                 </div>
 
-<#--                <div class="form-group">-->
-<#--                    <input type="text" class="form-control" name="time" placeholder="Time">-->
-<#--                </div>-->
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary">Propose</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <h4>Proposed Talks</h4>
-
-
-<@t.talkTable talks>
-
-</@t.talkTable>
+    <div>Assign to a talk:</div>
+    <@t.talkTable talks>
+    </@t.talkTable>
 
 </@c.page>

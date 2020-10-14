@@ -70,7 +70,7 @@ public class AdminController {
     @GetMapping("/addTalk")
     public String showTalks(Model model) {
 
-        participantService.findSpeakers(model);
+//        participantService.findSpeakers(model);
         conferenceService.showAllConferences(model,"");
         talkService.showAllTalks(model);
 
@@ -78,9 +78,11 @@ public class AdminController {
     }
 
     @PostMapping("/addTalk")
-    public String addTalk(@RequestParam String name, @RequestParam String time, @RequestParam String conference_id, @RequestParam String speaker_id, Model model) {
+//    public String addTalk(@RequestParam String name, @RequestParam String time, @RequestParam String conferenceId, @RequestParam String speakerId, Model model) {
+    public String addTalk(@RequestParam String name, @RequestParam String time, @RequestParam String conferenceId, Model model) {
 
-        talkService.addTalk(name, time, conference_id, speaker_id, model);
+//        talkService.addTalk(name, time, conferenceId, speakerId, model);
+        talkService.addTalk(name, time, conferenceId, model);
 
         return "addTalk";
     }

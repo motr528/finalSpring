@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ConferenceService {
@@ -27,7 +28,7 @@ public class ConferenceService {
 
     @Transactional
     public void showAllConferences(Model model, String filter) {
-        List<Conference> conferences = (List<Conference>) conferenceRepo.findAll();
+        List<Conference> conferences = conferenceRepo.findAll();
 
         if (filter != null && !filter.isEmpty()) {
             conferences = conferenceRepo.findByLocation(filter);
@@ -37,6 +38,14 @@ public class ConferenceService {
 
         model.addAttribute("conferences", conferences);
         model.addAttribute("filter", filter);
+    }
+
+    @Transactional
+    public void showAllConferencesWithSlots(Model model) {
+        List<Conference> conferences = conferenceRepo.findAll().stream()
+                .filter(conf -> conf.getAvailableSlots() != 0)
+                .collect(Collectors.toList());
+        model.addAttribute("conferences", conferences);
     }
 
     @Transactional

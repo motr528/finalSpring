@@ -25,7 +25,7 @@
     <br/>
     <#list conferences as conference>
         <div>
-            <@conf.conf_view conference talks>
+            <@conf.conf_view conference conference.talks>
             </@conf.conf_view>
         </div>
     <#else > No conference

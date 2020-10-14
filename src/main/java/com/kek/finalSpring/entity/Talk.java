@@ -26,7 +26,7 @@ public class Talk {
     private Date time;
 
     public Talk(String name, Date time) {
-        this.name =name;
+        this.name = name;
         this.time = time;
     }
 
@@ -37,6 +37,12 @@ public class Talk {
     @ManyToMany(mappedBy = "talks", fetch = FetchType.EAGER)
     private Set<Conference> conferences = new HashSet<>();
 
+    @ManyToMany(mappedBy = "possibleTalks", fetch = FetchType.EAGER)
+    private Set<Participant> possibleSpeaker = new HashSet<>();
+
+    public boolean hasSpeaker() {
+        return speaker == null;
+    }
 
 
 }

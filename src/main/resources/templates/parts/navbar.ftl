@@ -36,11 +36,6 @@
             </li>
             </#if>
 
-<#--            <#if participant??>-->
-<#--                <li class="nav-item">-->
-<#--                    <a class="nav-link" href="/user/profile">Profile</a>-->
-<#--                </li>-->
-<#--            </#if>-->
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/addConference">Add conference</a>
@@ -50,6 +45,12 @@
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/addTalk">Add talk</a>
+                </li>
+            </#if>
+
+            <#if isSpeaker>
+                <li class="nav-item">
+                    <a class="nav-link" href="/talks">Talks</a>
                 </li>
             </#if>
         </ul>
