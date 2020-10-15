@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Part;
+
 @Controller
 public class SpeakerController {
 
@@ -38,17 +40,7 @@ public class SpeakerController {
         return "talks";
     }
 
-    @PostMapping("/proposeTalk")
-    public String createTalk(@RequestParam String name,
-                             @RequestParam String time,
-                             @RequestParam String conferenceId,
-                             @RequestParam String talkId,
-                             @RequestParam String speakerId, Model model) {
 
-
-        return "assignToTalk";
-
-    }
 
     @PostMapping("/assignToTalk")
     public String addTalk(
@@ -59,5 +51,24 @@ public class SpeakerController {
         participantService.assignToTalkAndShowIt(talkId, speakerId, model);
 
         return "talks";
+    }
+
+    @GetMapping("proposeTalk")
+    public String showProposedTalks(@AuthenticationPrincipal Participant participant, Model model) {
+        talkService.showSpeakersProposedTalks(participant.getEmail(), model);
+        conferenceService.showAllConferencesWithSlots(model);
+        return "proposeTalk";
+    }
+
+    @PostMapping("/proposeTalk")
+    public String createTalk(@RequestParam String name,
+                             @RequestParam String time,
+                             @RequestParam String conferenceId,
+                             @RequestParam String talkId,
+                             @RequestParam String speakerId, Model model) {
+
+
+        return "proposeTalk";
+
     }
 }

@@ -26,25 +26,4 @@ public class MainController {
         return "greeting";
     }
 
-//    @GetMapping("/main")
-//    public String main(Map<String, Object> model) {
-//        Iterable<Conference> conferences = conferenceRepo.findAll();
-//
-//        model.put("conferences", conferences);
-//
-//        return "main";
-//    }
-//
-//    @PostMapping("/main")
-//    public String add(@RequestParam String name, @RequestParam String location, Map<String, Object> model) {
-//        Conference conference = new Conference(name, location);
-//
-//        conferenceRepo.save(conference);
-//
-//        Iterable<Conference> conferences = conferenceRepo.findAll();
-//
-//        model.put("conferences", conferences);
-//
-//        return "main";
-//    }
 }

@@ -109,8 +109,7 @@ public class ParticipantService implements UserDetailsService {
         model.addAttribute("talksAssigned", talks);
         talkService.showTalksWithoutAssignedToSpeaker(possibleSpeaker.getEmail(),model);
         model.addAttribute("noButton", "noButton");
-
-
     }
+
 }
 

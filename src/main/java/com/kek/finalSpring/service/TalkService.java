@@ -67,6 +67,15 @@ public class TalkService {
     }
 
     @Transactional
+    public void showTalksWithPossibleSpeakers(Model model){
+        List<Talk> talks = talkRepo.findAll().stream()
+                .filter(Talk::hasSpeaker)
+                .filter(Talk::hasPotentialSpeaker)
+                .collect(Collectors.toList());
+        model.addAttribute("talks", talks);
+    }
+
+    @Transactional
     public void showTalksWithoutAssignedToSpeaker(String email, Model model){
         Participant speaker = participantService.findByEmail(email);
         List<Talk> talks = findAll().stream()
@@ -116,6 +125,16 @@ public class TalkService {
 
     @Transactional
     public void assignToTalk(String name, String time, String conferenceId, String speakerId, Model model) {
+    }
 
+    @Transactional
+    public void showSpeakersProposedTalks(String email, Model model) {
+        Participant speaker = participantService.findByEmail(email);
+
+        List<Talk> talks = speaker.getTalks().stream()
+                .filter(t -> t.getConferences().isEmpty())
+                .collect(Collectors.toList());
+
+        model.addAttribute("talks", talks);
     }
 }

@@ -33,7 +33,6 @@ public class RegistrationController {
         Participant participantFromDb = participantRepo.findByEmail(participant.getEmail());
 
         if (participantFromDb != null) {
-//            model.put("message", "User exists!");
             return "error";
         }
 

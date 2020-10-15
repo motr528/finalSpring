@@ -27,7 +27,6 @@ public class ParticipantController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public String participantList(Model model) {
-//        model.addAttribute("participants", participantRepo.findAll());
         model.addAttribute("participants", participantService.findAll());
         return "participantList";
     }

@@ -14,7 +14,8 @@
                     <input type="text" class="form-control" name="name" placeholder="Name"/>
                 </div>
 
-                <div class="md-form mx-5 my-5">
+<#--                <div class="md-form mx-5 my-5">-->
+                <div class="form-group">
                     <label for="inputMDEx1">Time</label>
                     <input type="time" name="time" id="inputMDEx1" class="form-control">
                 </div>

@@ -48,9 +48,21 @@
                 </li>
             </#if>
 
+            <#if isAdmin>
+                <li class="nav-item">
+                    <a class="nav-link" href="/assignSpeaker">Add speaker to talk</a>
+                </li>
+            </#if>
+
             <#if isSpeaker>
                 <li class="nav-item">
                     <a class="nav-link" href="/talks">Talks</a>
+                </li>
+            </#if>
+
+            <#if isSpeaker>
+                <li class="nav-item">
+                    <a class="nav-link" href="/proposeTalk">Propose talk to a conference</a>
                 </li>
             </#if>
         </ul>

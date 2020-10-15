@@ -1,7 +1,6 @@
 package com.kek.finalSpring.controller;
 
 import com.kek.finalSpring.entity.Conference;
-import com.kek.finalSpring.entity.Talk;
 import com.kek.finalSpring.repository.ConferenceRepo;
 import com.kek.finalSpring.repository.TalkRepo;
 import com.kek.finalSpring.service.ConferenceService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 @Controller
@@ -43,7 +41,7 @@ public class AdminController {
 
     @PostMapping("/addConference")
     public String addConference(@RequestParam String name, @RequestParam String location, @RequestParam String date,
-                                @RequestParam Integer numOfSlots ,Model model) {
+                                @RequestParam Integer numOfSlots, Model model) {
         Date dateFromString;
 
         try {
@@ -70,21 +68,26 @@ public class AdminController {
     @GetMapping("/addTalk")
     public String showTalks(Model model) {
 
-//        participantService.findSpeakers(model);
-        conferenceService.showAllConferences(model,"");
+        conferenceService.showAllConferences(model, "");
         talkService.showAllTalks(model);
 
         return "addTalk";
     }
 
     @PostMapping("/addTalk")
-//    public String addTalk(@RequestParam String name, @RequestParam String time, @RequestParam String conferenceId, @RequestParam String speakerId, Model model) {
     public String addTalk(@RequestParam String name, @RequestParam String time, @RequestParam String conferenceId, Model model) {
 
-//        talkService.addTalk(name, time, conferenceId, speakerId, model);
         talkService.addTalk(name, time, conferenceId, model);
 
         return "addTalk";
+    }
+
+    @GetMapping("assignSpeaker")
+    public String assignSpeaker(Model model) {
+
+        talkService.showTalksWithPossibleSpeakers(model);
+
+        return "assignSpeaker";
     }
 
 }

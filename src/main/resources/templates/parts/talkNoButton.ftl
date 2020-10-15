@@ -1,6 +1,7 @@
 <#include "security.ftl">
 
 <#macro talkTable talks>
+    <#if talks?has_content>
     <table class="table">
         <thead>
         <tr>
@@ -26,11 +27,13 @@
                 </#list>
 
             </tr>
-        <#else> No talks
+
         </#list>
 
         <#--    </#if>-->
         </tbody>
     </table>
+    <#else> No talks
+    </#if>
 </#macro>
 

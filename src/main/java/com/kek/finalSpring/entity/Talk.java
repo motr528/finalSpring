@@ -44,5 +44,12 @@ public class Talk {
         return speaker == null;
     }
 
+    public boolean hasPotentialSpeaker() {
+        return !possibleSpeaker.isEmpty();
+    }
+
+    public int getSize() {
+        return possibleSpeaker.size();
+    }
 
 }
