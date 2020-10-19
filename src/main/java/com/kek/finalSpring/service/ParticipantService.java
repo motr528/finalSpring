@@ -44,7 +44,7 @@ public class ParticipantService implements UserDetailsService {
         return participantRepo.findAll();
     }
 
-    @Transactional
+
     public void saveUser(Participant user, String email, Map<String, String> form) {
         user.setEmail(email);
         user.getDetails().setFirstName(form.get("firstName"));
@@ -66,7 +66,7 @@ public class ParticipantService implements UserDetailsService {
         participantRepo.save(user);
     }
 
-    @Transactional
+
     public void updateProfile(Participant user, String firstName, String lastName, String password) {
 
         user.getDetails().setFirstName(firstName);
@@ -80,7 +80,7 @@ public class ParticipantService implements UserDetailsService {
         participantRepo.save(user);
     }
 
-    @Transactional
+
     public void findSpeakers(Model model) {
         List<Participant> speakers = findAll().stream()
                 .filter(Participant::isSpeaker)

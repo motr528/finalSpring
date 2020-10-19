@@ -7,6 +7,7 @@ import com.kek.finalSpring.service.ConferenceService;
 import com.kek.finalSpring.service.ParticipantService;
 import com.kek.finalSpring.service.TalkService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,7 @@ public class AdminController {
         return "addConference";
     }
 
+    @PreAuthorize("isAdmin()")
     @PostMapping("/addConference")
     public String addConference(@RequestParam String name, @RequestParam String location, @RequestParam String date,
                                 @RequestParam Integer numOfSlots, Model model) {

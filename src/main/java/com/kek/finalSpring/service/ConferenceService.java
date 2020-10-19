@@ -2,7 +2,6 @@ package com.kek.finalSpring.service;
 
 import com.kek.finalSpring.entity.Conference;
 import com.kek.finalSpring.entity.Participant;
-import com.kek.finalSpring.entity.Talk;
 import com.kek.finalSpring.repository.ConferenceRepo;
 import com.kek.finalSpring.repository.ParticipantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +25,14 @@ public class ConferenceService {
     @Autowired
     private ConferenceRepo conferenceRepo;
 
-    @Transactional
+
     public void showAllConferences(Model model, String filter) {
-        List<Conference> conferences = conferenceRepo.findAll();
+        List<Conference> conferences;
 
         if (filter != null && !filter.isEmpty()) {
             conferences = conferenceRepo.findByLocation(filter);
+        } else {
+            conferences = conferenceRepo.findAll();
         }
 
         sortByDate(conferences);
@@ -40,7 +41,6 @@ public class ConferenceService {
         model.addAttribute("filter", filter);
     }
 
-    @Transactional
     public void showAllConferencesWithSlots(Model model) {
         List<Conference> conferences = conferenceRepo.findAll().stream()
                 .filter(conf -> conf.getAvailableSlots() != 0)
@@ -48,7 +48,7 @@ public class ConferenceService {
         model.addAttribute("conferences", conferences);
     }
 
-    @Transactional
+
     public void showByDate(String dateFrom, String dateTo, Model model) throws ParseException {
         List<Conference> conferences;
         Date dateFromAsDate;

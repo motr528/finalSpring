@@ -31,42 +31,38 @@ public class TalkService {
     @Autowired
     private ParticipantRepo participantRepo;
 
-    @Transactional
     public Talk findById(Long id) {
         return talkRepo.findById(id).orElse(new Talk());
     }
 
-    @Transactional
     public List<Talk> findAll() {
         return talkRepo.findAll();
     }
 
-    @Transactional
     public void save(Talk talk) {
         talkRepo.save(talk);
     }
 
-    @Transactional
     public void showAllTalks(Model model) {
         List<Talk> talks = talkRepo.findAll();
         model.addAttribute("talks", talks);
     }
 
-    @Transactional
+
     public void showAllTalksWithoutSpeakers(Model model) {
         List<Talk> talks = talkRepo.findAll().stream()
                 .filter(Talk::hasSpeaker).collect(Collectors.toList());
         model.addAttribute("talks", talks);
     }
 
-    @Transactional
+
     public void showTalksAssignedToSpeaker(String email, Model model){
         Participant speaker = participantService.findByEmail(email);
         List<Talk> talksAssigned = new ArrayList<>(speaker.getPossibleTalks());
         model.addAttribute("talksAssigned", talksAssigned);
     }
 
-    @Transactional
+
     public void showTalksWithPossibleSpeakers(Model model){
         List<Talk> talks = talkRepo.findAll().stream()
                 .filter(Talk::hasSpeaker)
@@ -75,7 +71,7 @@ public class TalkService {
         model.addAttribute("talks", talks);
     }
 
-    @Transactional
+
     public void showTalksWithoutAssignedToSpeaker(String email, Model model){
         Participant speaker = participantService.findByEmail(email);
         List<Talk> talks = findAll().stream()
@@ -127,7 +123,7 @@ public class TalkService {
     public void assignToTalk(String name, String time, String conferenceId, String speakerId, Model model) {
     }
 
-    @Transactional
+
     public void showSpeakersProposedTalks(String email, Model model) {
         Participant speaker = participantService.findByEmail(email);
 
